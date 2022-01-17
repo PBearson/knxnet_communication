@@ -8,9 +8,19 @@ Host Protocol Address Information (HPAI):
 
 Connection Request Information (CRI):
 - Additional information needed to fulfill a connection request
+- Structure:
+    - Structure length
+    - Connection type code
+    - Host protocol independent data
+    - Host protocol dependent data
 
 Connection Response Data Block (CRD):
 - Data block returned with CONNECT_RESPONSE
+- Structure:
+    - Structure length
+    - Connection type code
+    - Host protocol independent data
+    - Host protocol dependent data
 
 Description Information Block (DIB):
 - Returns a specific block of device information when responding to DESCRIPTION_REQUEST
@@ -58,10 +68,38 @@ Description - DESCRIPTION_RESPONSE:
     - DIB supported service families
 
 Connection Management - CONNECT_REQUEST
-- TODO
+- Sent by a client to a server's control endpoint.
+- Body begins with return address of the client's control endpoint.
+- After the body, the CRI specifies all information specific to this connection.
+- Connection types:
+    - DEVICE_MGMT_CONNECTION: configure a KNXnet/IP device
+    - TUNNEL_CONNECTION: forward KNX telegrams between 2 KNXnet/IP devices
+    - REMLOG_CONNECTION: configure and transfer data with a remote logging server
+    - REMCONF_CONNECTION: transfer data with a remote configuration server
+    - OBJSERVER_CONNECTION: configure and data transfer with an Object Server in a KNXnet/IP device
+- Stucture:
+    - KNXnet/IP header with service ID 0x0205
+    - HPAI control endpoint
+    - HPAI data endpoint
+    - CRI
 
 Connection Management - CONNECT_RESPONSE
-- TODO
+- Sent by the server as an answer to CONNECT_REQUEST.
+- Addressed to the client's control endpoint.
+- If CONNECT_REQUEST was successful, the body shall include a unique communication channel ID.
+- After the body, the HPAI specifies the server's data endpoint
+- Finally, the CRD contains connection type specific response data
+- Status types:
+    - E_NO_ERROR: Connection was successful
+    - E_CONNECTION_TYPE: Connection type is not supported by this server device
+    - E_CONNECTION_OPTION: One or more connection options are not supported by this server device
+    - E_NO_MORE_CONNECTIONS: server has too many concurrent connections
+- Structure:
+    - KNXnet/IP header with service ID 0x0206
+    - Channel ID
+    - Connection status
+    - HPAI data endpoint
+    - CRD
 
 Connection Management - CONNECTIONSTATE_REQUEST
 - TODO
