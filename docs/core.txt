@@ -1,1 +1,76 @@
-Discover - 
+Host Protocol Address Information (HPAI): 
+- Uniquely identifies the communication channel on the host protocol
+- Structure:
+    - Structure length
+    - Host protocol (e.g., UDP)
+    - IP address
+    - port
+
+Connection Request Information (CRI):
+- Additional information needed to fulfill a connection request
+
+Connection Response Data Block (CRD):
+- Data block returned with CONNECT_RESPONSE
+
+Description Information Block (DIB):
+- Returns a specific block of device information when responding to DESCRIPTION_REQUEST
+- Returns at least 2 DIB structures: 1) device hardware; 2) support service families.
+- Device information types:
+    - Device information (1)
+    - Service families (2)
+    - IP configuration (3)
+    - Current IP configuration (4)
+    - KNX addresses (5)
+    - Reserved (6 - 0xfd)
+    - Manufacturer-defined data (0xfe)
+    - Not used (0xff)
+
+Discovery - SEARCH_REQUEST:
+- Send a frame via multicast to the listening endpoints of any listening KNXnet/IP server.
+- Connectionless and stateless. The client's discovery endpoint address information is included in the frame body.
+- Structure:
+    - KNXnet/IP header with service ID 0x0201 (SEARCH_REQUEST)
+    - HPAI discovery endpoint
+
+Discovery - SEARCH_RESPONSE:
+- Sent by the server as an answer to SEARCH_REQUEST.
+- Addressed to the client's discovery endpoint (in the HPAI).
+- Returns its HPAI control endpoint, and 2 DIB blocks (device information and supported service families)
+- Structure:
+    - KNXnet/IP header with service ID 0x0202 (SEARCH_RESPONSE)
+    - HPAI control endpoint
+    - DIB device hardware
+    - DIB supported service families
+
+Description - DESCRIPTION_REQUEST:
+- Sent by a client to a server's control endpoint to get a description of the server device.
+- Contains the return address of the client's control endpoint.
+- Structure:
+    - KNXnet/IP header with service ID 0x0203 (DESCRIPTION_REQUEST)
+    - HPAI control endpoint
+
+Description - DESCRIPTION_RESPONSE:
+- Sent by the server as an answer to DESCRIPTION_REQUEST.
+- Addressed to the client's control endpoint (in the HPAI).
+- Structure (might include more than 2 DIB structures):
+    - KNXnet/IP header with service ID 0x0204 (DESCRIPTION_RESPONSE)
+    - DIB device hardware
+    - DIB supported service families
+
+Connection Management - CONNECT_REQUEST
+- TODO
+
+Connection Management - CONNECT_RESPONSE
+- TODO
+
+Connection Management - CONNECTIONSTATE_REQUEST
+- TODO
+
+Connection Management - CONNECTIONSTATE_RESPONSE
+- TODO
+
+Connection Management - DISCONNECT_REQUEST
+- TODO
+
+Connection Management - DISCONNECT_RESPONSE
+- TODO
