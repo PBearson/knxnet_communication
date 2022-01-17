@@ -102,13 +102,37 @@ Connection Management - CONNECT_RESPONSE
     - CRD
 
 Connection Management - CONNECTIONSTATE_REQUEST
-- TODO
+- Sent by a client to a server's control endpoint
+- Specifies a channel ID 
+- Purpose is basically to "resume" a previous "session" (I have not seen KNX standard use this word, but this is essentially what it is)
+- Structure:
+    - KNXnet/IP header with service ID 0x0207
+    - Channel ID
+    - reserved
+    - HPAI control endpoint
 
 Connection Management - CONNECTIONSTATE_RESPONSE
-- TODO
+- Sent by the server as an answer to CONNECTIONSTATE_REQUEST.
+- Addressed to the client's control endpoint.
+- Status types:
+    - E_NO_ERROR
+    - E_CONNECTION_ID: Server cannot find an active data connection with this channel ID
+    - E_DATA_CONNECTION: Server detects an error concerning the data connection with the specified ID
+    - E_KNX_CONNECTION: Server detects na error concerning the KNX subnetwork connection with the specified ID
+- Structure:
+    - KNXnet/IP header with service ID 0x0208 
+    - Channel ID
+    - Connection status
 
 Connection Management - DISCONNECT_REQUEST
-- TODO
+- Structure:
+    - KNXnet/IP header with service ID 0x0209
+    - Channel ID
+    - reserved
+    - HPAI control endpoint
 
 Connection Management - DISCONNECT_RESPONSE
-- TODO
+- Structure:
+    - KNXnet/IP header with service ID 0x020a
+    - Channel ID
+    - Status
