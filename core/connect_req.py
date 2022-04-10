@@ -28,12 +28,12 @@ kip_cri = cri_length + cri_code + cri_layer + cri_reserved
 
 # Fix total length field
 total_length_int = len(kip_header + kip_hpai_control + kip_hpai_data + kip_cri)
-total_length = bytearray.fromhex(hex(total_length_int)[2:])
-if len(total_length) == 1:
-    total_length = bytearray.fromhex("00") + total_length
+total_length = bytearray.fromhex("%.4x" % total_length_int)
 
+# Fix header
 kip_header = fixed_header + service_id + total_length
 
+# Craft final payload
 kip_payload = kip_header + kip_hpai_control + kip_hpai_data + kip_cri
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
