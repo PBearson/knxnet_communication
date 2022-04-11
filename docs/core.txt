@@ -35,6 +35,15 @@ Description Information Block (DIB):
     - Manufacturer-defined data (0xfe)
     - Not used (0xff)
 
+Connection Header:
+- Contains gneral information about an established data connection
+- Structure:
+    - Structure length
+    - Channel ID
+    - Sequence counter
+    - Service type specific field
+    - Connection type specific field
+
 Discovery - SEARCH_REQUEST:
 - Send a frame via multicast to the listening endpoints of any listening KNXnet/IP server.
 - Connectionless and stateless. The client's discovery endpoint address information is included in the frame body.
