@@ -5,7 +5,7 @@ M_PropRead.req:
 - Sent by the management client to read the value of a Property of an Interface Object in the management server
 - Interface object is addressed by Object type and Object instance number
 - Structure:
-    - Message code
+    - Message code (0xfc)
     - Interface object type
     - Object instance number
     - Property ID

@@ -1,1 +1,17 @@
-TODO
+Device Management - DEVICE_CONFIGURATION_REQUEST
+- Reads/writes KNXnet/IP device configuration data
+- The client can send the following kinds of cEMI services:
+    - M_PropRead.req
+    - M_PropWrite.req
+    - M_Reset.req
+    - M_FuncPropCommand.req
+    - M_FuncPropStateRead.req
+    - cEMI T_Data_Individual.req
+    - CEMI T_Data_Connected.req
+- Structure:
+    - KNXnet/IP header with service ID 0x0310
+    - Connection header
+    - cEMI frame with a local device management service.
+
+Device Management - DEVICE_CONFIGURATION_ACK
+- Sent by a KNXnet/IP device to confirm reception of the device configuration request.
