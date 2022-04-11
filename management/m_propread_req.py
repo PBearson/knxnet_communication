@@ -10,7 +10,7 @@ kip_header = fixed_header + service_id + total_length
 
 connection_header_length = bytearray.fromhex("04")
 connection_header_channel_id = bytearray.fromhex("01")
-connection_header_seq = bytearray.fromhex("01")
+connection_header_seq = bytearray.fromhex("00")
 connection_header_reserved = bytearray.fromhex("00")
 kip_connection_header = connection_header_length + connection_header_channel_id + connection_header_seq + connection_header_reserved
 
